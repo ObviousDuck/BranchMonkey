@@ -35,11 +35,11 @@ done
 }
 
 trav(){
-	$DIR/trav.sh > $DIR/trav.txt
-	COUNT=$(gawk '{ sum += $3 }; END { print sum }' $DIR/trav.txt)
-	echo "total| " $COUNT >> $DIR/trav.txt
+	$DIR/BranchMonkeyTraverse.sh > $DIR/BranchMonkeyTraverse.txt
+	COUNT=$(gawk '{ sum += $3 }; END { print sum }' $DIR/BranchMonkeyTraverse.txt)
+	echo "total| " $COUNT >> $DIR/BranchMonkeyTraverse.txt
 	clear
-    cat $DIR/trav.txt
+    cat $DIR/BranchMonkeyTraverse.txt
     echo "Current directory is now:" $PWD
 }
 
@@ -65,9 +65,9 @@ cd "$test" && pwd
 echo "Current directory is now:" $PWD
 }
 
-chmod +rx dialogshell.sh
-chmod +rx trav.sh
+chmod +rx BranchMonkey.sh
+chmod +rx BranchMonkeyTraverse.sh
 
 # If Dialog is not found on system, run this version (basicshell.sh) otherwise, run dialogshell.sh.
 command -v dialog >/dev/null 2>&1 || { menu; }
-sh dialogshell.sh
+sh BranchMonkey.sh
