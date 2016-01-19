@@ -65,4 +65,9 @@ cd "$test" && pwd
 echo "Current directory is now:" $PWD
 }
 
-menu
+chmod +rx dialogshell.sh
+chmod +rx trav.sh
+
+# If Dialog is not found on system, run this version (basicshell.sh) otherwise, run dialogshell.sh.
+command -v dialog >/dev/null 2>&1 || { menu; }
+sh dialogshell.sh
