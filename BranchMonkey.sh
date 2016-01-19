@@ -70,11 +70,11 @@ case $? in
 esac
       ;;
     1 )
-	chmod +x trav.sh
-	$DIR/trav.sh > $DIR/trav.txt
-	COUNT=$(gawk '{ sum += $3 }; END { print sum }' $DIR/trav.txt)
-	echo "total| " $COUNT >> $DIR/trav.txt
-	dialog --stdout --textbox $DIR/trav.txt 22 70
+	chmod +x BranchMonkeyTraverse.sh
+	$DIR/BranchMonkeyTraverse.sh > $DIR/BranchMonkeyTraverse.txt
+	COUNT=$(gawk '{ sum += $3 }; END { print sum }' $DIR/BranchMonkeyTraverse.txt)
+	echo "total| " $COUNT >> $DIR/BranchMonkeyTraverse.txt
+	dialog --stdout --textbox $DIR/BranchMonkeyTraverse.txt 22 70
       ;;
   esac
 done
