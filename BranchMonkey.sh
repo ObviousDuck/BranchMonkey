@@ -20,10 +20,11 @@ while true; do
     --clear \
     --cancel-label "Exit" \
     --menu "Please select:" $HEIGHT $WIDTH 10 \
-    "1" "Return to Parent Directory" \
-    "2" "Return to Home Directory" \
-    "3" "Return to Starting Directory" \
-    "4" "Choose Directory..." \
+    "1" "Traverse current Directory" \
+    "2" "Return to Parent Directory" \
+    "3" "Return to Home Directory" \
+    "4" "Return to Starting Directory" \
+    "5" "Choose Directory..." \
     2>&1 1>&3)
   exit_status=$?
   exec 3>&-
@@ -44,16 +45,16 @@ while true; do
       clear
       echo "Program terminated."
       ;;
-    1 )
+    2 )
       cd ..
       ;;
-    2 )
-      cd 
-      ;;
-    3 )
+    4 )
       cd $DIR
       ;;
-    4 )
+    3 )
+      cd
+      ;;
+    5 )
       DIALOG=${DIALOG=dialog}
 
 FILE=`$DIALOG --stdout --title "Please choose a file" --fselect $PWD/ 14 48`
@@ -67,6 +68,13 @@ case $? in
 	255)
 		echo "Box closed.";;
 esac
+      ;;
+    1 )
+	chmod 777 trav.sh
+	$DIR/trav.sh > $DIR/trav.txt
+	COUNT=$(gawk '{ sum += $3 }; END { print sum }' $DIR/trav.txt)
+	echo "total| " $COUNT >> $DIR/trav.txt
+	dialog --stdout --textbox $DIR/trav.txt 22 70
       ;;
   esac
 done
