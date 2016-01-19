@@ -57,24 +57,4 @@ while true; do
     5 )
       DIALOG=${DIALOG=dialog}
 
-FILE=`$DIALOG --stdout --title "Please choose a file" --fselect $PWD/ 14 48`
-
-case $? in
-	0)
-		echo "\"$FILE\" chosen"
-      		cd $FILE;;
-	1)
-		echo "Cancel pressed.";;
-	255)
-		echo "Box closed.";;
-esac
-      ;;
-    1 )
-	chmod 777 trav.sh
-	$DIR/trav.sh > $DIR/trav.txt
-	COUNT=$(gawk '{ sum += $3 }; END { print sum }' $DIR/trav.txt)
-	echo "total| " $COUNT >> $DIR/trav.txt
-	dialog --stdout --textbox $DIR/trav.txt 22 70
-      ;;
-  esac
-done
+FILE=`$DIALOG --stdout --title "Please choose a file" --f
