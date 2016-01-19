@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 DIALOG_CANCEL=1
 DIALOG_ESC=255
 HEIGHT=20
@@ -14,13 +16,14 @@ display_result() {
 while true; do
   exec 3>&1
   selection=$(dialog \
-    --title "Utility" \
+    --title $PWD \
     --clear \
     --cancel-label "Exit" \
     --menu "Please select:" $HEIGHT $WIDTH 10 \
     "1" "Return to Parent Directory" \
     "2" "Return to Home Directory" \
-    "3" "Print Directory" \
+    "3" "Return to Starting Directory" \
+    "4" "Choose Directory..." \
     2>&1 1>&3)
   exit_status=$?
   exec 3>&-
@@ -48,9 +51,22 @@ while true; do
       cd 
       ;;
     3 )
-      dialog --title "Directory" \
-    --no-collapse \
-    --msgbox "$PWD" 0 0
+      cd $DIR
+      ;;
+    4 )
+      DIALOG=${DIALOG=dialog}
+
+FILE=`$DIALOG --stdout --title "Please choose a file" --fselect $PWD/ 14 48`
+
+case $? in
+	0)
+		echo "\"$FILE\" chosen"
+      		cd $FILE;;
+	1)
+		echo "Cancel pressed.";;
+	255)
+		echo "Box closed.";;
+esac
       ;;
   esac
 done
